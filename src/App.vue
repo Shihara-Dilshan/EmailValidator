@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Navbar />
+    <div id="jambo">
+      <b-jumbotron lead="Email Validator with Vue.js">
+        <div>
+          <b-form-input v-model="text" placeholder="Enter your name"></b-form-input>
+        </div>
+        <b-button id="btn" variant="info" href="#">Check</b-button>
+      </b-jumbotron>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from "./Navbar.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Navbar
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#btn {
+  width: 100%;
+  margin-top: 2%;
+}
+
+#jambo {
+  padding: 2%;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
