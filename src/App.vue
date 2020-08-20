@@ -6,7 +6,7 @@
         <div>
           <b-form-input
             v-model="input_email"
-            v-on:keyup.enter="validate"
+            v-on:keyup.enter="validateWithZeroBouce"
             placeholder="Enter your name"
           ></b-form-input>
         </div>
@@ -15,9 +15,16 @@
           variant="info"
           href="#"
           v-bind:disabled="input_email.length<=0"
-          v-on:click="validate"
+          v-on:click="validateWithZeroBouce"
         >Check</b-button>
-        <p v-if="valid === true">Email is valid</p>
+        <ul v-if="valid === true">
+          <p>Email is valid</p>
+          <li>account : {{valid_details.account}}</li>
+          <li>address : {{valid_details.address}}</li>
+          <li>domain : {{valid_details.domain}}</li>
+          <li>status : {{valid_details.status}}</li>
+
+        </ul>
         <p v-else-if="valid === false">Email is not valid</p>
         <p v-else-if="valid === 'wait' ">Please wait</p>
         <p v-else></p>
@@ -35,30 +42,33 @@ export default {
     return {
       input_email: "",
       valid: "",
-      api_key: "e0454de7a4161b8f149a90a4cb0461c25ecd959b",
-      api_key2: "b892d2302e654860a079c864a54d184a"
+      valid_details:{
+        account: "",
+        address: "",
+        domain: "",
+        status: "",
+      },
+      api_key: "b892d2302e654860a079c864a54d184a"
     };
   },
   methods: {
-    async validate() {
-      this.valid = "wait";
-      const validateCall = await fetch(
-        `https://api.hunter.io/v2/email-verifier?email=${this.input_email}&api_key=${this.api_key}`
-      );
-      const result = await validateCall.json();
-
-      result.data === undefined
-        ? (this.valid = false)
-        : result.data.result === "undeliverable"
-        ? (this.valid = false)
-        : (this.valid = true);
-    },
     async validateWithZeroBouce() {
       this.valid = "wait";
       const validateCall = await fetch(
-        `https://api.zerobounce.net/v1/validatewithip?apikey=b892d2302e654860a079c864a54d184a&email=valid@eddxample.com&ipAddress=156.124.12.145`
+        `https://api.zerobounce.net/v1/validatewithip?apikey=${this.api_key}&email=${this.input_email}&ipAddress=156.124.12.145`
       );
       const result = await validateCall.json();
+
+      if(result.status === 'Invalid'){
+          this.valid = false;
+      }else if(result.status === 'Valid'){
+          this.valid = true;
+          this.valid_details.account = result.account;
+          this.valid_details.address = result.address;
+          this.valid_details.domain = result.domain;
+          this.valid_details.status = result.status;
+      }
+
       console.log(result);
     }
   },
