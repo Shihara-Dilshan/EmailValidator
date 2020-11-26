@@ -1,7 +1,7 @@
 # email-validator
 <div align="center">
 
-![Electron Boilerplate Demo](https://raw.githubusercontent.com/Shihara-Dilshan/img/master/record251-2020-11-26_17.22.05.mp4)
+![Electron Boilerplate Demo](https://raw.githubusercontent.com/Shihara-Dilshan/img/master/giff.gif)
 
 </div>
 
