@@ -1,4 +1,9 @@
 # email-validator
+<div align="center">
+
+![Electron Boilerplate Demo](https://raw.githubusercontent.com/Shihara-Dilshan/img/master/about.gif)
+
+</div>
 
 ## Project setup
 ```
