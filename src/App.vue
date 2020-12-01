@@ -71,19 +71,18 @@ export default {
         status: "",
       },
       api_key: "b892d2302e654860a079c864a54d184a",
-      value: 0,
+        value: 0,
         max: 100,
+        intervel: 0,
     };
   },
   methods: {
   
     randomValue() {
         
-        let returnValue = setInterval( () => {
+        this.intervel = setInterval( () => {
             if(this.value < 100){
                 this.value = this.value +5;
-            }else{
-                clearInterval(returnValue);
             }
         },500); 
         
@@ -98,9 +97,12 @@ export default {
 
       if(result.status === 'Invalid'){
           this.valid = false;
+          this.value = 0;
+          clearInterval(this.intervel);
       }else if(result.status === 'Valid'){
           this.valid = true;
           this.value = 0;
+          clearInterval(this.intervel);
           this.valid_details.account = result.account;
           this.valid_details.address = result.address;
           this.valid_details.domain = result.domain;
