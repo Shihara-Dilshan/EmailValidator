@@ -1,7 +1,8 @@
 # email-validator
+![visitors](https://visitor-badge.glitch.me/badge?page_id=emailvalidatorvue.visitor-badge)
 <div align="center">
 
-![Electron Boilerplate Demo](https://raw.githubusercontent.com/Shihara-Dilshan/img/master/giff.gif)
+![Electron Boilerplate Demo](https://raw.githubusercontent.com/Shihara-Dilshan/EmailValidator-Vue.js-BootstrapVue/master/about.gif)
 
 </div>
 
