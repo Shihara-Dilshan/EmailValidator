@@ -5,7 +5,17 @@
 
 </div>
 
-## Project setup
+### Clone The project
+```
+git clone https://github.com/Shihara-Dilshan/EmailValidator-Vue.js-BootstrapVue.git
+```
+
+###Go to the project directory
+```
+cd EmailValidator-Vue.js-BootstrapVue
+```
+
+### Project setup
 ```
 npm install
 ```
