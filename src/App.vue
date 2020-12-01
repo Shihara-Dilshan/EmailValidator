@@ -2,12 +2,32 @@
   <div id="app">
     <Navbar />
     <div id="jambo">
-      <b-jumbotron lead="Email Validator with Vue.js">
-        <div>
+      <b-jumbotron>
+
+      <h2 id="heading"><b-badge>Email Validator with ZeroBounce API</b-badge></h2>
+            <h3>Instructions</h3>
+       <b-list-group>
+  <b-list-group-item class="d-flex justify-content-between align-items-center">
+    Enter an email
+    <b-badge variant="primary" pill>1</b-badge>
+  </b-list-group-item>
+
+  <b-list-group-item class="d-flex justify-content-between align-items-center">
+    Click on check
+    <b-badge variant="primary" pill>2</b-badge>
+  </b-list-group-item>
+
+  <b-list-group-item class="d-flex justify-content-between align-items-center">
+     View the results
+    <b-badge variant="primary" pill>3</b-badge>
+  </b-list-group-item>
+</b-list-group>
+          <br />
+        <div id="inputfeild">
           <b-form-input
             v-model="input_email"
             v-on:keyup.enter="validateWithZeroBouce"
-            placeholder="Enter your name"
+            placeholder="Enter an email"
           ></b-form-input>
         </div>
         <b-button
@@ -17,6 +37,7 @@
           v-bind:disabled="input_email.length<=0"
           v-on:click="validateWithZeroBouce"
         >Check</b-button>
+        
         <ul v-if="valid === true">
           <p>Email is valid</p>
           <li>account : {{valid_details.account}}</li>
@@ -26,10 +47,11 @@
 
         </ul>
         <p v-else-if="valid === false">Email is not valid</p>
-        <p v-else-if="valid === 'wait' ">Please wait</p>
+        <b-progress v-else-if="valid === 'wait' " :value="value" :max="max" show-progress animated></b-progress>
         <p v-else></p>
       </b-jumbotron>
     </div>
+    
   </div>
 </template>
 
@@ -48,11 +70,26 @@ export default {
         domain: "",
         status: "",
       },
-      api_key: "b892d2302e654860a079c864a54d184a"
+      api_key: "b892d2302e654860a079c864a54d184a",
+      value: 0,
+        max: 100,
     };
   },
   methods: {
+  
+    randomValue() {
+        
+        let returnValue = setInterval( () => {
+            if(this.value < 100){
+                this.value = this.value +5;
+            }else{
+                clearInterval(returnValue);
+            }
+        },500); 
+        
+      },
     async validateWithZeroBouce() {
+      this.randomValue();
       this.valid = "wait";
       const validateCall = await fetch(
         `https://api.zerobounce.net/v1/validatewithip?apikey=${this.api_key}&email=${this.input_email}&ipAddress=156.124.12.145`
@@ -63,6 +100,7 @@ export default {
           this.valid = false;
       }else if(result.status === 'Valid'){
           this.valid = true;
+          this.value = 0;
           this.valid_details.account = result.account;
           this.valid_details.address = result.address;
           this.valid_details.domain = result.domain;
@@ -84,9 +122,18 @@ export default {
   padding: 0;
 }
 
+#inputfeild {
+     margin-top: 20px;
+}
+
+#heading {
+    margin-bottom: 20px;
+}
+
 #btn {
   width: 100%;
   margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 ul,
@@ -96,7 +143,7 @@ p {
 }
 
 #jambo {
-  padding: 2%;
+  padding: 0%;
   text-align: center;
 }
 </style>
